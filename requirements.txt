@@ -15,7 +15,6 @@ Werkzeug==0.9.4
 WTForms==1.0.5
 autolink==0.1.1
 decorator==3.4.0
-itsdangerous==0.24
 pbr==0.10.0
 six==1.7.3
 sqlalchemy-migrate==0.9.1
