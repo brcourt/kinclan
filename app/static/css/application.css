@@ -1,0 +1,90 @@
+@import url(http://fonts.googleapis.com/css?family=Ubuntu);
+
+body {
+  background-color: #C8CBD0;
+  font-family: 'Ubuntu', sans-serif;
+}
+
+small {
+  color: #c3c3c3;
+}
+
+h6 {
+  margin-bottom: 0px;
+}
+
+.container {
+  width: 970px !important;
+}
+.top-menu {
+  background: none repeat scroll 0% 0% #465262;
+  border-radius: 7px 7px 0px 0px;
+  padding: 10px 20px 15px 20px;
+  color: #BFC6CF;
+}
+.top-menu h6 > a {
+  font-size: 24px;
+  font-weight: bold;
+  color: #FFFFFF;
+}
+.top-right-menu {
+  font-size: 18px;
+}
+.top-right-menu > a {
+  color: #FFFFFF;
+}
+.top-right-menu .item {
+  padding-left: 15px;
+}
+.menu-row {
+  margin-left: -10px;
+  margin-right: -10px;
+  background: none repeat scroll 0% 0% #DEE3E9;
+  padding-top: 10px;
+}
+.menu-row .nav {
+  border-bottom: 0px;
+}
+.menu-row .nav-tabs > li > a {
+  line-height: 2.2;
+}
+.page-contents {
+  margin-top: 25px;
+}
+.inner-contents {
+  background-color: #FFFFFF;
+  padding: 0px 10px 15px 10px;
+}
+.main-inner-contents {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+.left-column {
+  margin-top: 25px;
+}
+.right-column {
+  color: #FFFFFF;
+}
+.right-column small {
+  color: #FFFFFF;
+}
+.profile-info-top {
+  padding-top: 10px;
+}
+.profile-info-text a {
+  color: #FFFFFF;
+}
+.profile-picture-small {
+  border-radius: 7px;
+}
+.post {
+  margin-top: 0px;
+  margin-bottom: 10px;
+}
+.post .content {
+  margin-top: -5px;
+  margin-left: -30px;
+}
+.post .content-body {
+  font-size: 14px;
+}

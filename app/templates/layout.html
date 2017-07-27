@@ -1,0 +1,234 @@
+<html>
+  <head>
+    <title>{% block title %}{% endblock %}</title>
+		<link href="/static/css/bootstrap.css" rel="stylesheet">
+		<link href="/static/css/flat-ui.css" rel="stylesheet">
+    <link href="/static/css/demo.css" rel="stylesheet">
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.5/socket.io.min.js"></script>
+	  <script src="/static/js/jquery.min.js"></script>
+  </head>
+  <body>
+    <div class="container">
+
+		 <div class="page-contents">
+		<div class="col-xs-12">
+     <div class="navrow row">
+          <nav class="navbar navbar-inverse navbar-embossed" role="navigation">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-01">
+                <span class="sr-only">Toggle navigation</span>
+              </button>
+            </div>
+					<div class="col-lg-1">
+						<a href="{{ url_for('home') }}"><h6 style="color: white;"><strong>Kinclan</strong></h6></a>
+					</div>
+
+						<!-- Notification Icons, black to show nothing, 1 space to show just icon, and space then number to show number of notifications -->
+
+
+					<div class="col-lg-5">
+					  <ul class="nav navbar-nav navbar-left" style="margin-top: 15px; margin-left: 20px;">
+						<li><a href="{{ url_for('messages') }}" class="b" style="padding: 3px;">
+							<div class="label label-danger glyphicon glyphicon-envelope" id="refresh">
+								{{ new_message }}
+							</div></a></li>
+
+						<li><a href="{{ url_for('home') }}" class="b" style="padding: 2px;">
+							<div class="label label-info glyphicon glyphicon-comment">
+								{{ new_post }}
+							</div></a></li>
+
+						<li><a href="{{ url_for('calendar') }}" class="b" style="padding: 2px;">
+							<div class="label label-success glyphicon glyphicon-calendar"> </div></a></li>
+					  </ul>
+												<!-- Add notification updates here |^| -->
+					</div>
+					<div clas="col-lg-5">
+						<ul class="nav navbar-nav navbar-right">
+							{% if g.user == None or g.user.is_authenticated() == False %}
+                <li><a href="/login">Login</a></li>
+								<li><a href="/signup">Sign Up!</a></li>
+							{% endif%}{% if g.user != None and g.user.is_authenticated() %}
+								<li><a href="{{ url_for('profile', handle=g.user.handle) }}">{{ g.user.full_name() }}</a></li>
+								<li><a href="{{ url_for('messages', recipient='none') }}">Settings</a></li>
+								<li><a href="/logout">Logout</a></li>
+								{% endif %}
+                  </ul>
+					</div>
+          </nav><!-- /navbar -->
+					<div class="row">
+					<div class="col-xs-12">
+          <nav class="navbar2 menu2" role="navigation">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-01">
+                <span class="sr-only">Toggle navigation</span>
+              </button>
+
+					</div>
+						<div class="row">
+						 <div class="col-lg-8" style="padding: 0px; margin-left: 5px;">
+              <ul class="nav nav-tabs">{% block menutabs %}{% endblock %}
+					</ul>
+					</div>
+						<form class="form-horizontal" role="form">
+							<div class="col-lg-4 login-form" style="padding: 0px; margin-right: -20px;">
+								<input align="right" type="text" class="form-control" placeholder="Search posts and people"/>
+                            	<label class="login-field-icon fui-search" style="border-color: transparent transparent transparent;" for="login-pass"></label>
+							</div>
+						</form>
+
+          </nav><!-- /navbar -->
+				 </div>
+        </div>
+      </div>
+
+
+<div class="inner-content">
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for category, message in messages %}
+    <div class="alert alert-dismissable alert{% if category != 'message'%}-{{ category }}{% endif %}{% if category == 'message' %}-warning{% endif %}">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>{{ message }}</strong>
+    </div>
+
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+
+    {% block body %}{% endblock %}
+    </div>
+</div>
+</div>
+
+    <script src="/static/js/jquery-ui-1.10.3.custom.min.js"></script>
+
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/bootstrap-select.js"></script>
+    <script src="/static/js/bootstrap-switch.js"></script>
+    <script src="/static/js/flatui-checkbox.js"></script>
+    <script src="/static/js/flatui-radio.js"></script>
+    <script src="/static/js/jquery.tagsinput.js"></script>
+    <script src="/static/js/jquery.placeholder.js"></script>
+	<script>var objDiv = document.getElementById("message-scroll");
+			objDiv.scrollTop = objDiv.scrollHeight;</script>
+
+      <script type="text/javascript" charset="utf-8">
+        $(document).ready(function() {
+            // Use a "/test" namespace.
+            // An application can open a connection on multiple namespaces, and
+            // Socket.IO will multiplex all those connections on a single
+            // physical channel. If you don't care about multiple channels, you
+            // can set the namespace to an empty string.
+            namespace = '/test';
+            // Connect to the Socket.IO server.
+            // The connection URL has the following format:
+            //     http[s]://<domain>:<port>[/<namespace>]
+            var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port + namespace);
+            // Event handler for new connections.
+            // The callback function is invoked when a connection with the
+            // server is established.
+            socket.on('connect', function() {
+                socket.emit('my_event', {data: 'I\'m connected!'});
+            });
+            // Event handler for server sent data.
+            // The callback function is invoked whenever the server emits data
+            // to the client. The data is then displayed in the "Received"
+            // section of the page.
+            socket.on('my_response', function(msg) {
+                $('#log').append('<br>' + $('<div/>').text('Received #' + msg.count + ': ' + msg.data).html());
+            });
+            // Interval function that tests message latency by sending a "ping"
+            // message. The server then responds with a "pong" message and the
+            // round trip time is measured.
+            var ping_pong_times = [];
+            var start_time;
+            window.setInterval(function() {
+                start_time = (new Date).getTime();
+                socket.emit('my_ping');
+            }, 1000);
+            // Handler for the "pong" message. When the pong is received, the
+            // time from the ping is stored, and the average of the last 30
+            // samples is average and displayed.
+            socket.on('my_pong', function() {
+                var latency = (new Date).getTime() - start_time;
+                ping_pong_times.push(latency);
+                ping_pong_times = ping_pong_times.slice(-30); // keep last 30 samples
+                var sum = 0;
+                for (var i = 0; i < ping_pong_times.length; i++)
+                    sum += ping_pong_times[i];
+                $('#ping-pong').text(Math.round(10 * sum / ping_pong_times.length) / 10);
+            });
+            // Handlers for the different forms in the page.
+            // These accept data from the user and send it to the server in a
+            // variety of ways
+            $('form#emit').submit(function(event) {
+                socket.emit('my_event', {data: $('#emit_data').val()});
+                return false;
+            });
+            $('form#broadcast').submit(function(event) {
+                socket.emit('my_broadcast_event', {data: $('#broadcast_data').val()});
+                return false;
+            });
+            $('form#join').submit(function(event) {
+                socket.emit('join', {room: $('#join_room').val()});
+                return false;
+            });
+            $('form#leave').submit(function(event) {
+                socket.emit('leave', {room: $('#leave_room').val()});
+                return false;
+            });
+            $('form#send_room').submit(function(event) {
+                socket.emit('my_room_event', {room: $('#room_name').val(), data: $('#room_data').val()});
+                return false;
+            });
+            $('form#close').submit(function(event) {
+                socket.emit('close_room', {room: $('#close_room').val()});
+                return false;
+            });
+            $('form#disconnect').submit(function(event) {
+                socket.emit('disconnect_request');
+                return false;
+            });
+        });
+    </script>
+    <h1>Flask-SocketIO Test</h1>
+    <p>Async mode is: <b>{{ async_mode }}</b></p>
+    <p>Average ping/pong latency: <b><span id="ping-pong"></span>ms</b></p>
+    <h2>Send:</h2>
+    <form id="emit" method="POST" action='#'>
+        <input type="text" name="emit_data" id="emit_data" placeholder="Message">
+        <input type="submit" value="Echo">
+    </form>
+    <form id="broadcast" method="POST" action='#'>
+        <input type="text" name="broadcast_data" id="broadcast_data" placeholder="Message">
+        <input type="submit" value="Broadcast">
+    </form>
+    <form id="join" method="POST" action='#'>
+        <input type="text" name="join_room" id="join_room" placeholder="Room Name">
+        <input type="submit" value="Join Room">
+    </form>
+    <form id="leave" method="POST" action='#'>
+        <input type="text" name="leave_room" id="leave_room" placeholder="Room Name">
+        <input type="submit" value="Leave Room">
+    </form>
+    <form id="send_room" method="POST" action='#'>
+        <input type="text" name="room_name" id="room_name" placeholder="Room Name">
+        <input type="text" name="room_data" id="room_data" placeholder="Message">
+        <input type="submit" value="Send to Room">
+    </form>
+    <form id="close" method="POST" action="#">
+        <input type="text" name="close_room" id="close_room" placeholder="Room Name">
+        <input type="submit" value="Close Room">
+    </form>
+    <form id="disconnect" method="POST" action="#">
+        <input type="submit" value="Disconnect">
+    </form>
+    <h2>Receive:</h2>
+<div id="log"></div>
+
+
+
+  </body>
+</html>

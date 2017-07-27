@@ -1,0 +1,111 @@
+{% extends "layout.html" %}
+	{% block title %}Messages{% endblock %}
+	{% block menutabs %}
+ 	<li><a href="{{ url_for('home') }}">Home</a></li>
+	<li><a href="{{ url_for('members') }}">Family</a></li>
+  <li class="active"><a href="{{ url_for('messages') }}">Messages</a></li>
+	<li><a href="{{ url_for('pictures') }}">Albums</a></li>
+	<li><a href="{{ url_for('calendar') }}">Calendar</a></li>
+	{% endblock %}
+
+{% block body %}
+<div class="col-xs-8" style="margin-right: 5px;">
+		<div class="row message" id="message-scroll">
+			<div class="col-xs-12">
+        <p> <img src="../static/images/users/{{ recipient }}.jpg" class="profpic"> Messages with {{ recipient }}</p>
+        <hr>
+				{% if not recipient %}
+					<p>Choose someone on the right to send a message to!</p>
+				{% endif %}
+				{% for messages in messages %}
+					{% if messages.author != g.user.handle %}
+				<div class="row">
+					<div class="col-xs-11">
+						<small><p class="smalltext" align="right">{{ messages.pub_date|timesince(messages.pub_date) }} | {{ recipient }} said:</p></small>
+						<p class="post_content" align="right">{{ messages.content }}</p>
+					</div>
+					<div class="col-xs-1">
+						<img src="../static/images/users/{{ messages.author }}.jpg" class="smallprofpic">
+					</div>
+				</div>
+					{% else %}
+				<div class="row">
+					<div class="col-xs-1">
+						<img src="../static/images/users/{{ messages.author }}.jpg" class="smallprofpic">
+					</div>
+					<div class="col-xs-11">
+						<small><p class="smalltext" align="left">{{ messages.pub_date|timesince(messages.pub_date) }} | you said:</p></small>
+						<p class="post_content text-info" align="left">{{ messages.content|safe }}</p>
+					</div>
+				</div>
+					{% endif %}
+				{% endfor %}
+			</div>
+		</div>
+	{% if recipient %}
+	<div class="row post-form">
+	<form class="form-horizontal" name="input" action="/messages/{{ recipient }}/send" method="POST" role="form">
+		<div class="col-xs-10 control-group form-group">
+      		<input type="text" content="" name="content" placeholder="Send a message" class="form-control" />
+			<label class="login-field-icon fui-mail" style="padding: 0px; margin-right: 20px;" for="login-pass"></label>
+		</div>
+		<div class="col-xs-2">
+    		<button type="submit" class="btn btn-block btn-info">Send</button>
+  		</div>
+	</div>
+	</form>
+	<p><small>Typing message to {{ recipient }}</small></p>
+	{% endif %}
+</div>
+
+<div class="row" style="margin-right: -15px;">
+	<div class="col-xs-4 right-column">
+	<div class="row">
+		<div class="col-xs-12 text-center palette-peter-river">
+		<p></p>
+			<img class="profpic" src="/static/images/users/{{ g.user.handle }}.jpg">
+		</div>
+	</div>
+<div class="row">
+	<div class="col-xs-12 text-center palette-peter-river">
+		<h6>{{ g.user.first_name }} {{ g.user.last_name }}</h6>
+		<small>{{ g.user.handle }}</small>
+	</div>
+</div>
+<div class="row">
+	<div class="col-xs-12 text-center palette-belize-hole">
+		<div class="row">
+			<div class="col-xs-6">
+				Messages: 0
+			</div>
+			<div class="col-xs-6">
+				Family: {{ users }}
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row" align="right" style="margin-right: -25px;">
+		<div class="todo mrm">
+            <ul>
+
+{% for user in user %}
+
+
+
+
+              <li class="todo-content" style="padding: 10px;">
+                <div class="row"><a href="{{ url_for('messages', recipient=user.handle) }}">
+					<div class="col-xs-3" style="padding: -5px; margin: -5px;">
+						<img src="../static/images/users/{{ user.handle }}.jpg" class="smallprofpic">
+					</div>
+					<div class="col-xs-9" style="padding: -5px;">
+						<div class='label label-danger' id="{{ user.handle }}"></div>
+						<strong> {{ user.full_name() }} </strong>
+					</div>
+				</div></a>
+              </li>
+{% endfor %}
+            </ul>
+	</div>
+</div>
+{% endblock %}

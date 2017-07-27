@@ -1,0 +1,74 @@
+{% extends "layout.html" %}
+	{% block title %}Home{% endblock %}
+	{% block menutabs %}
+ 	<li class="active"><a href="{{ url_for('home') }}">Home</a></li>
+	<li><a href="{{ url_for('members') }}">Family</a></li>
+  <li><a href="{{ url_for('messages') }}">Messages</a></li>
+	<li><a href="{{ url_for('pictures') }}">Albums</a></li>
+	<li><a href="{{ url_for('calendar') }}">Calendar</a></li>
+	{% endblock %}
+
+{% block body %}
+
+<div class="row">
+	<div class="col-xs-8"><hr>
+		<div class="row post-form">
+			<div class="col-xs-9">
+				<form class="form-horizontal" name="input" action="/home/post" method="POST" role="form">
+					<div class="control-group form-group">
+      			<input type="text" content="" name="content" placeholder="What's happening right now?" class="form-control" />
+				<label class="login-field-icon fui-chat" style="border-color: transparent transparent transparent;" for="login-pass"></label>
+    			</div>
+  			</div>
+  				<div class="col-xs-3">
+    				<button type="submit" class="btn btn-block btn-lg btn-info">Post</button>
+  				</div>
+				</form>
+
+			</div>
+<hr>
+
+{% for post in post %}
+<div class="row well post">
+	<div class="col-xs-2">
+		<img src="static/images/users/{{ post.author.handle }}.jpg" class="profpic">
+	</div>
+	<div class="col-xs-10">{% if g.user.handle == post.author.handle %}
+		<strong><a href="/profile/{{ post.author.handle }}">Me</a></strong><small> - </small><small class="smalltext"> {{ post.pub_date|timesince(post.pub_date) }}</small>
+						{% else %}
+		<strong><a href="/profile/{{ post.author.handle }}">{{ post.author.full_name() }}</a></strong><small> - </small><small class="smalltext"> {{ post.pub_date|timesince(post.pub_date) }}</small>
+					{% endif %}
+		<p class="post_content">{{ post.content|safe }}</p>
+	</div>
+</div>
+{% endfor %}
+
+</div>
+<div class="col-xs-4 right-column">
+	<div class="row">
+		<div class="col-xs-12 text-center palette-peter-river">
+		<p></p>
+			<img class="profpic" src="/static/images/users/{{ g.user.handle }}.jpg">
+		</div>
+	</div>
+<div class="row">
+	<div class="col-xs-12 text-center palette-peter-river">
+		<h6>{{ g.user.first_name }} {{ g.user.last_name }}</h6>
+		<small>{{ g.user.handle }}</small>
+	</div>
+</div>
+<div class="row">
+	<div class="col-xs-12 text-center palette-belize-hole">
+		<div class="row">
+			<div class="col-xs-6">
+				Posts: {{ post_count }}
+			</div>
+			<div class="col-xs-6">
+				Family: {{ users }}
+			</div>
+		</div>
+	</div>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<div class="login">
+	<form id="loginform" class="form-horizontal" role="form" action="{{ url_for('login') }}" method="post">
+        <div class="login-screen">
+          <div class="login-icon">
+            <p>Welcome :)</p>
+          </div>
+
+          <div class="login-form">
+            <div class="control-group">
+              <input id="login-username" type="text" class="form-control" name="email" value="" placeholder="email">
+              <label class="login-field-icon fui-user" for="login-name"></label>
+            </div>
+
+            <div class="control-group">
+              <input id="login-password" type="password" class="form-control" name="password" placeholder="password">
+              <label class="login-field-icon fui-lock" for="login-pass"></label>
+            </div>
+
+            <button class="btn btn-inverse btn-large btn-block" type="submit">Login</button>
+            <a class="login-link" href="#">Lost your password?</a>
+          </div>
+        </div>
+				</form>
+      </div>
+
+
+
+{% endblock %}

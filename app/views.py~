@@ -1,0 +1,118 @@
+import datetime
+
+from app import app, db, login_manager
+from flask import abort, flash, g, redirect, render_template, request, url_for
+from flask.ext.login import current_user, login_required, login_user, \
+        logout_user
+
+from app.forms import LoginValidator, PostForm
+from app.models import Post, User
+
+
+login_manager.login_view = 'login'
+
+
+@app.route('/')
+@login_required
+def home():
+	posts = Post.query.order_by('id desc').all()
+	users = len(User.query.order_by('id desc').all())
+
+	user_post_count = len(Post.query.filter_by(author=g.user).all())
+	return render_template("home.html", all_posts=posts, post_count=user_post_count, users=users)
+
+
+@app.route('/profile/<handle>')
+@login_required
+def profile(handle):
+	user = User.query.filter_by(handle=handle).first()
+	posts = Post.query.filter_by(id=post.id).all()
+	
+	user_count = len(User.query.order_by('id desc').all())
+	user_post_count = len(Post.query.filter_by(author=g.user).all())
+	return render_template("profile.html", all_posts=posts, post_count=user_post_count, user_count=user_count, user=user)
+
+
+@app.route('/home/post', methods=['POST'])
+@login_required
+def new_post():
+    form = PostForm()
+    content = form.content.data
+    
+    if len(content) > 0:
+        post = Post(content=content)
+        post.author = g.user
+        post.pub_date = datetime.datetime.utcnow()
+
+        db.session.add(post)
+        db.session.commit()
+    else:
+        flash("Status updates cannot be blank.", "warning")
+
+    return redirect(url_for('home'))
+
+
+@app.route('/messages')
+@login_required
+def messages():
+    return render_template("messages.html")
+
+@app.route('/members')
+@login_required
+def members():
+	users = User.query.order_by('id desc').all()	
+	user_count = len(User.query.order_by('id desc').all())
+	user_post_count = len(Post.query.filter_by(author=g.user).all())
+	
+	return render_template("members.html", post_count=user_post_count, all_users=users, user_count=user_count, user=users)
+
+@app.route('/photos')
+@login_required
+def pictures():
+    return "Members"
+
+@app.route('/calendar')
+@login_required
+def calendar():
+    return "Members"
+
+
+@app.route('/login', methods=["GET", "POST"])
+def login():
+    if g.user is not None and g.user.is_authenticated():
+        return redirect(url_for('home'))
+
+    if request.method == 'POST':
+        login = LoginValidator(username=request.form.get('email'),
+                               password=request.form.get('password'))
+
+        if login.is_valid:
+            login_user(login.lookup_user, remember=True)
+            # flash('You have logged in successfully.', 'success')
+            return redirect(url_for('home'))
+        else:
+            flash('Incorrect email/password', 'danger')
+
+    return render_template('login.html')
+
+
+@app.route("/logout")
+def logout():
+    logout_user()
+    return redirect(url_for('login'))
+
+
+def is_logged_in():
+    if g.user is not None and g.user.is_authenticated():
+        return True
+    return None
+
+
+@login_manager.user_loader
+def load_user(id):
+    return User.query.get(int(id))
+
+
+@app.before_request
+def before_request():
+    g.user = current_user

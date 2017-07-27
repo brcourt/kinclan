@@ -1,0 +1,172 @@
+.container {
+  width: 960px !important;
+	
+}
+
+body	{
+	background-color: #c8cbd0;
+}
+
+.page-contents {
+	background-color: white;
+	padding: 10px;
+	margin-top: 30px;
+	border-radius: 7px 7px 0px 0px;
+}
+
+.inner-content	{
+	background-color: white;
+	margin: -25px;
+	padding: 25px 15px 15px 15px;
+}
+
+.navrow	{
+	margin-left: -25px;
+  margin-right: -25px;
+	margin-top: -10px;
+}
+
+nav	{
+	padding-right: 25px;
+	padding-left: 5px;
+	padding-top: 5px;
+}
+
+.navrow .nav {
+	border-bottom: 0px;
+}
+
+.navbar	{
+	border-radius: 7px 7px 0px 0px;
+	background-color: #34495E;
+}
+
+.search-box	{
+	padding-top: 0px;
+	padding-right: 0px;
+}
+
+.menu2	{
+	padding-left: 10px;
+	padding-bottom: 0px;
+}
+
+.logo	{
+	padding-left: 20px;
+}
+
+.navbar2 .nav-tabs > li > a {
+	line-height: 1.66;
+}
+
+.navbar2	{
+	background-color: #dee3e9;
+	font-size: 16px;
+	min-height: 53px;
+	margin-top: -30px;
+	margin-bottom: 10px;
+	padding-top: 5px;	
+	padding-bottom: 0px;
+}
+
+.navbar h5	{
+	color: white;
+}
+
+.right-column	{
+	color: white;
+	margin-top: -10px;
+}
+
+.post_content	{
+	font-size: 15px;
+}
+.smalltext {
+	font-size: 12px;
+	color: blue;
+}
+
+.profpic {
+	border-radius: 7px;
+	height: 50px;
+	width: 50px;
+}
+
+.smallprofpic {
+	border-radius: 15px;
+	height: 30px;
+	width: 30px;
+}
+
+.post	{
+	overflow: auto;
+	padding: 10px;
+}
+
+.message	{
+	overflow-x: hidden;
+    overflow-y: auto;
+	height: 600px;
+
+	margin-left: -30px;
+
+}
+
+.post-form {
+  background-color: #0;
+  padding: 24px 23px 20px;
+  position: relative;
+  border-radius: 6px;
+}
+.post-form:before {
+  content: '';
+  border-style: solid;
+  border-width: 12px 12px 12px 0;
+  border-color: transparent transparent transparent;
+  height: 0;
+  position: absolute;
+  left: -12px;
+  top: 35px;
+  width: 0;
+  -webkit-transform: rotate(360deg);
+}
+.post-form .control-group {
+  margin-bottom: 6px;
+  position: relative;
+}
+.post-form .login-field {
+  border-color: transparent;
+  font-size: 17px;
+  text-indent: 3px;
+}
+.post-form .login-field:focus {
+  border-color: #1abc9c;
+}
+.post-form .login-field:focus + .login-field-icon {
+  color: #1abc9c;
+}
+.post-form .login-field-icon {
+  color: #C8CBD0;
+  font-size: 16px;
+  position: absolute;
+  right: 15px;
+  top: 3px;
+  -webkit-transition: 0.25s;
+  transition: 0.25s;
+}
+
+.b {
+  color: #FFFFFF;
+  text-decoration: none;
+  -webkit-transition: 0.25s;
+  transition: 0.25s;
+}
+.b:hover,
+.b:focus {
+  color: #FFFFFF;
+  text-decoration: none;
+}
+.b:focus {
+  outline: none;
+}
+
