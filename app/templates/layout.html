@@ -47,7 +47,7 @@
 						<ul class="nav navbar-nav navbar-right">
 							{% if g.user == None or g.user.is_authenticated() == False %}
                 <li><a href="/login">Login</a></li>
-								<li><a href="{{ url_for('auth_page.login') }}">Sign Up!</a></li>
+								<li><a href="{{ url_for('auth.login') }}">Sign Up!</a></li>
 							{% endif%}{% if g.user != None and g.user.is_authenticated() %}
 								<li><a href="{{ url_for('profile.profile', handle=g.user.handle) }}">{{ g.user.full_name() }}</a></li>
 								<li><a href="{{ url_for('profile.profile', handle=g.user.handle) }}">Settings</a></li>

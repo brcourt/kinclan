@@ -18,7 +18,7 @@ login_manager.login_view = 'login'
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
 
-from app.auth_page import *
+from app.auth import *
 from app.calendar import *
 from app.home import *
 from app.members import *
@@ -27,7 +27,7 @@ from app.pictures import *
 from app.profile import *
 
 
-app.register_blueprint(auth_page)
+app.register_blueprint(auth)
 app.register_blueprint(calendar)
 app.register_blueprint(home)
 app.register_blueprint(members)

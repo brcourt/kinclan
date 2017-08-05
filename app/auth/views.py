@@ -1,8 +1,17 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, redirect, request, url_for, g
 from flask.ext.login import current_user, login_required, login_user, \
     logout_user
 
-#auth_page = Blueprint('auth_page', __name__, template_folder='templates')
+from app.auth import auth as mod
+from app.forms import LoginValidator
+from app.models import User
+from app import login_manager
+
+
+@mod.before_request
+def before_request():
+    g.user = current_user
+
 
 def load_user(user_id):
     """
@@ -19,10 +28,10 @@ def load_user(user_id):
     return agent
 
 
-@auth_page.route('/login', methods=["GET", "POST"])
+@mod.route('/login', methods=["GET", "POST"])
 def login():
     if g.user is not None and g.user.is_authenticated():
-        return redirect(url_for('home'))
+        return redirect(url_for('home.home'))
 
     if request.method == 'POST':
         login = LoginValidator(username=request.form.get('email'),
@@ -31,17 +40,17 @@ def login():
         if login.is_valid:
             login_user(login.lookup_user, remember=True)
             # flash('You have logged in successfully.', 'success')
-            return redirect(url_for('home'))
+            return redirect(url_for('home.home'))
         else:
             flash('Incorrect email/password', 'danger')
 
     return render_template('login.html')
 
 
-@auth_page.route('/logout')
+@mod.route('/logout')
 def logout():
     logout_user()
-    return redirect(url_for('login'))
+    return redirect(url_for('auth.login'))
 
 
 def is_logged_in():
@@ -50,6 +59,6 @@ def is_logged_in():
     return None
 
 
-# @login_manager.user_loader
-# def load_user(id):
-#     return User.query.get(int(id))
+@login_manager.user_loader
+def load_user(id):
+    return User.query.get(int(id))
