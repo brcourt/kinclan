@@ -1,4 +1,5 @@
-from flask import Blueprint, render_template, g, Markup, redirect, url_for
+from flask import Blueprint, render_template, g, Markup, redirect, url_for, \
+    flash
 from flask.ext.login import current_user, login_required, login_user, \
     logout_user
 from flask.ext.sqlalchemy import SQLAlchemy
@@ -31,6 +32,7 @@ def home():
     new_message = len(Message.query.filter(Message.recipient == g.user.handle)
                       .filter(Message.read is False).all()) or ""
     new_post = len(Post.query.filter(Post.id > g.user.last_post).all()) or ""
+
     return render_template("home.html", post=post, post_count=user_post_count,
                            users=users, new_message=new_message,
                            new_post=new_post)

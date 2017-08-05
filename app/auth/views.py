@@ -1,4 +1,5 @@
-from flask import Blueprint, render_template, redirect, request, url_for, g
+from flask import Blueprint, render_template, redirect, request, url_for, g, \
+    flash
 from flask.ext.login import current_user, login_required, login_user, \
     logout_user
 
@@ -11,21 +12,6 @@ from app import login_manager
 @mod.before_request
 def before_request():
     g.user = current_user
-
-
-def load_user(user_id):
-    """
-    This will be used many times like on using current_user
-    :param user_id: username
-    :return: user or none
-    """
-    agent = None
-    try:
-        agent = Agent.objects.get(username=user_id)
-    except:
-        # https://flask-login.readthedocs.org/en/latest/#how-it-works
-        pass
-    return agent
 
 
 @mod.route('/login', methods=["GET", "POST"])
