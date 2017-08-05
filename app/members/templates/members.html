@@ -1,11 +1,11 @@
 {% extends "layout.html" %}
 	{% block title %}Members{% endblock %}
 	{% block menutabs %}
- 	<li><a href="{{ url_for('home') }}">Home</a></li>
-	<li class="active"><a href="{{ url_for('members') }}">Family</a></li>
-  <li><a href="{{ url_for('messages') }}">Messages</a></li>
-	<li><a href="{{ url_for('pictures') }}">Albums</a></li>
-	<li><a href="{{ url_for('calendar') }}">Calendar</a></li>
+ 	<li><a href="{{ url_for('home.home') }}">Home</a></li>
+	<li class="active"><a href="{{ url_for('members.members') }}">Family</a></li>
+  <li><a href="{{ url_for('messages.messages') }}">Messages</a></li>
+	<li><a href="{{ url_for('pictures.pictures') }}">Albums</a></li>
+	<li><a href="{{ url_for('calendar.calendar') }}">Calendar</a></li>
 	{% endblock %}
 
 {% block body %}
@@ -28,11 +28,11 @@
 	<div class="row">
 		<div class="col-xs-4">
 			{% if g.user.handle != user.handle %}
-			<a href="{{ url_for('messages', recipient=user.handle) }}"><button type="submit" class="btn btn-block btn-sm btn-danger">Message</button></a>
+			<a href="{{ url_for('messages.messages', recipient=user.handle) }}"><button type="submit" class="btn btn-block btn-sm btn-danger">Message</button></a>
 			{% endif %}
 		</div>
 		<div class="col-xs-4">
-			<a href="{{ url_for('pictures') }}"><button type="submit" class="btn btn-block btn-sm btn-info">Photos</button></a>
+			<a href="{{ url_for('pictures.pictures') }}"><button type="submit" class="btn btn-block btn-sm btn-info">Photos</button></a>
 		</div>
 		<div class="col-xs-4">
 			<a href="/profile/{{ user.handle }}"><button type="submit" class="btn btn-block btn-sm btn-success">Profile</button></a>
@@ -44,9 +44,9 @@
 </div>
 <div class="col-xs-4 right-column">
 	<div class="row">
-		<div class="col-xs-12 text-center palette-peter-river">	
+		<div class="col-xs-12 text-center palette-peter-river">
 		<p></p>
-			<img class="profpic" src="/static/images/users/{{ g.user.handle }}.jpg"> 
+			<img class="profpic" src="/static/images/users/{{ g.user.handle }}.jpg">
 		</div>
 	</div>
 <div class="row">
@@ -57,7 +57,7 @@
 </div>
 <div class="row">
 	<div class="col-xs-12 text-center palette-belize-hole">
-		<div class="row">	
+		<div class="row">
 			<div class="col-xs-6">
 				Posts: {{ post_count }}
 			</div>

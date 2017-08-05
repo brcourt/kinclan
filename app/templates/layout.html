@@ -20,7 +20,7 @@
               </button>
             </div>
 					<div class="col-lg-1">
-						<a href="{{ url_for('home') }}"><h6 style="color: white;"><strong>Kinclan</strong></h6></a>
+						<a href="{{ url_for('home.home') }}"><h6 style="color: white;"><strong>Kinclan</strong></h6></a>
 					</div>
 
 						<!-- Notification Icons, black to show nothing, 1 space to show just icon, and space then number to show number of notifications -->
@@ -28,17 +28,17 @@
 
 					<div class="col-lg-5">
 					  <ul class="nav navbar-nav navbar-left" style="margin-top: 15px; margin-left: 20px;">
-						<li><a href="{{ url_for('messages') }}" class="b" style="padding: 3px;">
+						<li><a href="{{ url_for('messages.messages') }}" class="b" style="padding: 3px;">
 							<div class="label label-danger glyphicon glyphicon-envelope" id="refresh">
 								{{ new_message }}
 							</div></a></li>
 
-						<li><a href="{{ url_for('home') }}" class="b" style="padding: 2px;">
+						<li><a href="{{ url_for('home.home') }}" class="b" style="padding: 2px;">
 							<div class="label label-info glyphicon glyphicon-comment">
 								{{ new_post }}
 							</div></a></li>
 
-						<li><a href="{{ url_for('calendar') }}" class="b" style="padding: 2px;">
+						<li><a href="{{ url_for('calendar.calendar') }}" class="b" style="padding: 2px;">
 							<div class="label label-success glyphicon glyphicon-calendar"> </div></a></li>
 					  </ul>
 												<!-- Add notification updates here |^| -->
@@ -47,10 +47,10 @@
 						<ul class="nav navbar-nav navbar-right">
 							{% if g.user == None or g.user.is_authenticated() == False %}
                 <li><a href="/login">Login</a></li>
-								<li><a href="/signup">Sign Up!</a></li>
+								<li><a href="{{ url_for('auth_page.login') }}">Sign Up!</a></li>
 							{% endif%}{% if g.user != None and g.user.is_authenticated() %}
-								<li><a href="{{ url_for('profile', handle=g.user.handle) }}">{{ g.user.full_name() }}</a></li>
-								<li><a href="{{ url_for('messages', recipient='none') }}">Settings</a></li>
+								<li><a href="{{ url_for('profile.profile', handle=g.user.handle) }}">{{ g.user.full_name() }}</a></li>
+								<li><a href="{{ url_for('profile.profile', handle=g.user.handle) }}">Settings</a></li>
 								<li><a href="/logout">Logout</a></li>
 								{% endif %}
                   </ul>

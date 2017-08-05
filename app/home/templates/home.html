@@ -1,11 +1,11 @@
 {% extends "layout.html" %}
 	{% block title %}Home{% endblock %}
 	{% block menutabs %}
- 	<li class="active"><a href="{{ url_for('home') }}">Home</a></li>
-	<li><a href="{{ url_for('members') }}">Family</a></li>
-  <li><a href="{{ url_for('messages') }}">Messages</a></li>
-	<li><a href="{{ url_for('pictures') }}">Albums</a></li>
-	<li><a href="{{ url_for('calendar') }}">Calendar</a></li>
+ 	<li class="active"><a href="{{ url_for('home.home') }}">Home</a></li>
+	<li><a href="{{ url_for('members.members') }}">Family</a></li>
+  <li><a href="{{ url_for('messages.messages') }}">Messages</a></li>
+	<li><a href="{{ url_for('pictures.pictures') }}">Albums</a></li>
+	<li><a href="{{ url_for('calendar.calendar') }}">Calendar</a></li>
 	{% endblock %}
 
 {% block body %}
