@@ -11,7 +11,8 @@ class User(db.Model):
     last_post = db.Column(db.Integer)
 
     posts = db.relationship('Post', backref='author', lazy='dynamic')
-    messagess = db.relationship('Message', backref='authorhandle', lazy='dynamic')
+    messagess = db.relationship('Message', backref='authorhandle',
+                                lazy='dynamic')
 
     def full_name(self):
         return "%s %s" % (self.first_name, self.last_name)

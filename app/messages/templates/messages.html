@@ -15,7 +15,7 @@
         <p> <img src="../static/images/users/{{ recipient }}.jpg" class="profpic"> Messages with {{ recipient }}</p>
         <hr>
 				{% if not recipient %}
-					<p>Choose someone on the right to send a message to!</p>
+					<p>Start sending messages by choosing someone on the right!</p>
 				{% endif %}
 				{% for messages in messages %}
 					{% if messages.author != g.user.handle %}
@@ -40,23 +40,38 @@
 				</div>
 					{% endif %}
 				{% endfor %}
+        <div id="socket_messages"></div>
 			</div>
 		</div>
 	{% if recipient %}
+
+
+
 	<div class="row post-form">
-	<form class="form-horizontal" name="input" action="/messages/{{ recipient }}/send" method="POST" role="form">
-		<div class="col-xs-10 control-group form-group">
+	  <!-- <form class="form-horizontal" name="input" action="/messages/{{ recipient }}/send" method="POST" role="form">
+		   <div class="col-xs-10 control-group form-group">
       		<input type="text" content="" name="content" placeholder="Send a message" class="form-control" />
-			<label class="login-field-icon fui-mail" style="padding: 0px; margin-right: 20px;" for="login-pass"></label>
-		</div>
-		<div class="col-xs-2">
+			    <label class="login-field-icon fui-mail" style="padding: 0px; margin-right: 20px;" for="login-pass"></label>
+		    </div>
+		  <div class="col-xs-2">
     		<button type="submit" class="btn btn-block btn-info">Send</button>
   		</div>
-	</div>
-	</form>
-	<p><small>Typing message to {{ recipient }}</small></p>
+	    </div>
+	  </form> -->
+    <form id="send_room" class="form-horizontal" name="input" method="POST" action='/messages/{{ recipient }}/send' role"form">
+      <div class="col-xs-10 control-group form-group">
+        <input type="text" content="" name="room_data" id="room_data" placeholder="Send a message" class="form-control" />
+      </div>
+      <div class="col-xs-2">
+      	<button type="submit" class="btn btn-block btn-info">Send</button>
+    	</div>
+    </div>
+    </form>
+	  <p><small>Typing message to {{ recipient }}</small></p>
 	{% endif %}
-</div>
+  </div>
+
+
 
 <div class="row" style="margin-right: -15px;">
 	<div class="col-xs-4 right-column">

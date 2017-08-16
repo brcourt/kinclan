@@ -1,4 +1,4 @@
-from flask.ext.wtf import Form
+from flask_wtf import Form
 from wtforms import TextField
 
 from app import db
@@ -28,6 +28,7 @@ class LoginValidator(object):
 
 class PostForm(Form):
     content = TextField('content')
+
 
 class MessageForm(Form):
     content = TextField('content')

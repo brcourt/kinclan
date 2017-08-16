@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, g
-from flask.ext.login import current_user, login_required, login_user, \
+from flask_login import current_user, login_required, login_user, \
     logout_user
 
 from app import app

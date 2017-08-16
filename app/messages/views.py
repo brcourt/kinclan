@@ -1,5 +1,6 @@
-from flask import Blueprint, render_template, g, Markup, redirect, url_for
-from flask.ext.login import current_user, login_required, login_user, \
+from flask import Blueprint, render_template, g, Markup, redirect, url_for, \
+    flash
+from flask_login import current_user, login_required, login_user, \
     logout_user
 from autolink import linkify
 from datetime import datetime
@@ -10,7 +11,7 @@ from app.models import User, Message, Post
 from app.forms import MessageForm
 
 
-@app.before_request
+@mod.before_request
 def before_request():
     g.user = current_user
 
@@ -117,7 +118,9 @@ def new_message(recipient):
 
         db.session.add(message)
         db.session.commit()
+
     else:
         flash("Messages cannot be blank.", "danger")
 
-    return redirect(url_for('messages.messages', recipient=recipient))
+    return ('', 204)
+# return redirect(url_for('messages.messages', recipient=recipient))

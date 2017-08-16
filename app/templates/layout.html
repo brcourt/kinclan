@@ -45,10 +45,10 @@
 					</div>
 					<div clas="col-lg-5">
 						<ul class="nav navbar-nav navbar-right">
-							{% if g.user == None or g.user.is_authenticated() == False %}
+							{% if g.user == None or g.user.is_authenticated == False %}
                 <li><a href="/login">Login</a></li>
 								<li><a href="{{ url_for('auth.login') }}">Sign Up!</a></li>
-							{% endif%}{% if g.user != None and g.user.is_authenticated() %}
+							{% endif%}{% if g.user != None and g.user.is_authenticated %}
 								<li><a href="{{ url_for('profile.profile', handle=g.user.handle) }}">{{ g.user.full_name() }}</a></li>
 								<li><a href="{{ url_for('profile.profile', handle=g.user.handle) }}">Settings</a></li>
 								<li><a href="/logout">Logout</a></li>
@@ -111,8 +111,9 @@
     <script src="/static/js/flatui-radio.js"></script>
     <script src="/static/js/jquery.tagsinput.js"></script>
     <script src="/static/js/jquery.placeholder.js"></script>
-	<script>var objDiv = document.getElementById("message-scroll");
-			objDiv.scrollTop = objDiv.scrollHeight;</script>
+	  <script>var objDiv = document.getElementById("message-scroll");
+			objDiv.scrollTop = objDiv.scrollHeight;
+    </script>
 
       <script type="text/javascript" charset="utf-8">
         $(document).ready(function() {
@@ -131,6 +132,8 @@
             // server is established.
             socket.on('connect', function() {
                 socket.emit('my_event', {data: 'I\'m connected!'});
+                socket.emit('join', {room: "{{ g.user.handle }}"});
+                return false;
             });
             // Event handler for server sent data.
             // The callback function is invoked whenever the server emits data
@@ -139,6 +142,54 @@
             socket.on('my_response', function(msg) {
                 $('#log').append('<br>' + $('<div/>').text('Received #' + msg.count + ': ' + msg.data).html());
             });
+
+            // Update socket_messages div in messages.html to automatically add
+            // new messages.
+            //socket.on('room_message', function(msg) {
+            //    $('#socket_messages').append('<br>' + $('<div/>').text(msg.recipient + ': ' + msg.data).html());
+            //    var objDiv = document.getElementById("message-scroll");
+            //    objDiv.scrollTop = objDiv.scrollHeight;
+            //});
+
+
+            socket.on('room_message', function(msg) {
+              if (msg.author[0] == '{{ recipient }}') {
+                console.log('take 1')
+                $('#socket_messages').append(
+                  '<div class="row"> \
+        					  <div class="col-xs-11"> \
+        						  <small><p class="smalltext" align="right">Just Now | '
+                      + $('<div/>').text(msg.author[0]).html() + 'said:</p></small> \
+        						  <p class="post_content" align="right">' + $('<div/>').text(msg.data).html() + '</p> \
+        					  </div> \
+        					  <div class="col-xs-1"> \
+        						  <img src="../static/images/users/'
+                      + $('<div/>').text(msg.author[0]).html() + '.jpg" class="smallprofpic"> \
+        					  </div> \
+        				  </div>'
+                );
+              } else if (msg.author[0] == '{{ g.user.handle }}') {
+                console.log('take 2')
+                 $('#socket_messages').append(
+                   '<div class="row"> \
+                     <div class="col-xs-1"> \
+                       <img src="../static/images/users/'
+                       + $('<div/>').text(msg.author[0]).html() + '.jpg" class="smallprofpic"> \
+                     </div> \
+        			 		  <div class="col-xs-11"> \
+        			 			  <small><p class="smalltext" align="left">Just Now |  \
+                      you said:</p></small> \
+        			 			  <p class="post_content text-info" align="left">' + $('<div/>').text(msg.data).html() + '</p> \
+        			 		  </div> \
+        			 	  </div>'
+                 );
+                 document.getElementById("room_data").value = "";
+               }
+
+              var objDiv = document.getElementById("message-scroll");
+              objDiv.scrollTop = objDiv.scrollHeight;
+            });
+
             // Interval function that tests message latency by sending a "ping"
             // message. The server then responds with a "pong" message and the
             // round trip time is measured.
@@ -179,8 +230,11 @@
                 socket.emit('leave', {room: $('#leave_room').val()});
                 return false;
             });
-            $('form#send_room').submit(function(event) {
-                socket.emit('my_room_event', {room: $('#room_name').val(), data: $('#room_data').val()});
+              $('form#send_room').submit(function(event) {
+                socket.emit('my_room_event', author=['{{ g.user.handle }}', '{{ g.user.id }}'], recipient='{{ recipient }}',
+                  {room: '{{ recipient }}', data: $('#room_data').val()});
+                socket.emit('my_room_event', author=['{{ g.user.handle }}', '{{ g.user.id }}'], recipient='{{ recipient }}',
+                  {room: '{{ g.user.handle }}', data: $('#room_data').val()});
                 return false;
             });
             $('form#close').submit(function(event) {
@@ -213,11 +267,11 @@
         <input type="text" name="leave_room" id="leave_room" placeholder="Room Name">
         <input type="submit" value="Leave Room">
     </form>
-    <form id="send_room" method="POST" action='#'>
+    <!-- <form id="send_room" method="POST" action='#'>
         <input type="text" name="room_name" id="room_name" placeholder="Room Name">
         <input type="text" name="room_data" id="room_data" placeholder="Message">
         <input type="submit" value="Send to Room">
-    </form>
+    </form> -->
     <form id="close" method="POST" action="#">
         <input type="text" name="close_room" id="close_room" placeholder="Room Name">
         <input type="submit" value="Close Room">
@@ -226,7 +280,7 @@
         <input type="submit" value="Disconnect">
     </form>
     <h2>Receive:</h2>
-<div id="log"></div>
+    <div id="log"></div>
 
 
 

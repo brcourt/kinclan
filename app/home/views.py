@@ -1,8 +1,8 @@
 from flask import Blueprint, render_template, g, Markup, redirect, url_for, \
     flash
-from flask.ext.login import current_user, login_required, login_user, \
+from flask_login import current_user, login_required, login_user, \
     logout_user
-from flask.ext.sqlalchemy import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy
 from autolink import linkify
 from datetime import datetime
 

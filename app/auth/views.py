@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, redirect, request, url_for, g, \
     flash
-from flask.ext.login import current_user, login_required, login_user, \
+from flask_login import current_user, login_required, login_user, \
     logout_user
 
 from app.auth import auth as mod
@@ -16,7 +16,7 @@ def before_request():
 
 @mod.route('/login', methods=["GET", "POST"])
 def login():
-    if g.user is not None and g.user.is_authenticated():
+    if g.user is not None and g.user.is_authenticated:
         return redirect(url_for('home.home'))
 
     if request.method == 'POST':
@@ -40,7 +40,7 @@ def logout():
 
 
 def is_logged_in():
-    if g.user is not None and g.user.is_authenticated():
+    if g.user is not None and g.user.is_authenticated:
         return True
     return None
 
