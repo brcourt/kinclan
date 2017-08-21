@@ -64,7 +64,9 @@ def messages(recipient=None):
                                                'pub_date desc').first()
 
         if lastmessage is not None:
-            recipient = lastmessage.author
+            return redirect(url_for('messages.messages',
+                                    recipient=lastmessage.author))
+            # recipient = lastmessage.author
     recipient_search = User.query.filter(User.handle == recipient).first()
 
     if recipient_search is not None:
