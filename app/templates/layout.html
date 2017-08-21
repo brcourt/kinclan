@@ -4,8 +4,12 @@
 		<link href="/static/css/bootstrap.css" rel="stylesheet">
 		<link href="/static/css/flat-ui.css" rel="stylesheet">
     <link href="/static/css/demo.css" rel="stylesheet">
+    <link href="/static/css/grid.css" rel="stylesheet">
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.5/socket.io.min.js"></script>
 	  <script src="/static/js/jquery.min.js"></script>
+    <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script>
+    <script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.js"></script>
+    <script src="/static/js/jquery.isotope.perfectmasonry.js"></script>
   </head>
   <body>
     <div class="container">
@@ -153,13 +157,15 @@
 
 
             socket.on('room_message', function(msg) {
+              var audio = new Audio('../static/audio/notification.mp3');
+              audio.play();
               if (msg.author[0] == '{{ recipient }}') {
                 console.log('take 1')
                 $('#socket_messages').append(
                   '<div class="row"> \
         					  <div class="col-xs-11"> \
         						  <small><p class="smalltext" align="right">Just Now | '
-                      + $('<div/>').text(msg.author[0]).html() + 'said:</p></small> \
+                      + $('<div/>').text(msg.author[0]).html() + ' said:</p></small> \
         						  <p class="post_content" align="right">' + $('<div/>').text(msg.data).html() + '</p> \
         					  </div> \
         					  <div class="col-xs-1"> \
@@ -169,7 +175,6 @@
         				  </div>'
                 );
               } else if (msg.author[0] == '{{ g.user.handle }}') {
-                console.log('take 2')
                  $('#socket_messages').append(
                    '<div class="row"> \
                      <div class="col-xs-1"> \
@@ -231,11 +236,11 @@
                 return false;
             });
               $('form#send_room').submit(function(event) {
-                socket.emit('my_room_event', author=['{{ g.user.handle }}', '{{ g.user.id }}'], recipient='{{ recipient }}',
-                  {room: '{{ recipient }}', data: $('#room_data').val()});
-                socket.emit('my_room_event', author=['{{ g.user.handle }}', '{{ g.user.id }}'], recipient='{{ recipient }}',
-                  {room: '{{ g.user.handle }}', data: $('#room_data').val()});
-                return false;
+                  socket.emit('my_room_event', author=['{{ g.user.handle }}', '{{ g.user.id }}'], recipient='{{ recipient }}',
+                    {room: '{{ recipient }}', data: $('#room_data').val()});
+                  socket.emit('my_room_event', author=['{{ g.user.handle }}', '{{ g.user.id }}'], recipient='{{ recipient }}',
+                    {room: '{{ g.user.handle }}', data: $('#room_data').val()});
+                  return false;
             });
             $('form#close').submit(function(event) {
                 socket.emit('close_room', {room: $('#close_room').val()});

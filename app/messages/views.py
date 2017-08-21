@@ -94,33 +94,33 @@ def messages(recipient=None):
                            read_message=read_message, message_cid=message_cid)
 
 
-@mod.route('/messages/<recipient>/send', methods=['POST'])
-@login_required
-def new_message(recipient):
-    form = MessageForm()
-    content = form.content.data
-    content = Markup(content).striptags()
-    content = linkify(content)
+# @mod.route('/messages/<recipient>/send', methods=['POST'])
+# @login_required
+# def new_message(recipient):
+    # form = MessageForm()
+    # content = form.content.data
+    # content = Markup(content).striptags()
+    # content = linkify(content)
+    #
+    # recipient_search = User.query.filter(User.handle == recipient).first()
+    # recipient_id = recipient_search.id
+    # message_cid_list = sorted([str(g.user.id), str(recipient_id)])
+    # message_cid_list.insert(1, 'm')
+    # message_cid = ''.join(message_cid_list)
+    #
+    # if len(content) > 0:
+    #     message = Message(content=content)
+    #     message.id = len(Message.query.all())+1
+    #     message.cid = message_cid
+    #     message.author = g.user.handle
+    #     message.pub_date = datetime.utcnow()
+    #     message.recipient = recipient
+    #
+    #     db.session.add(message)
+    #     db.session.commit()
 
-    recipient_search = User.query.filter(User.handle == recipient).first()
-    recipient_id = recipient_search.id
-    message_cid_list = sorted([str(g.user.id), str(recipient_id)])
-    message_cid_list.insert(1, 'm')
-    message_cid = ''.join(message_cid_list)
+    # else:
+    #     flash("Messages cannot be blank.", "danger")
 
-    if len(content) > 0:
-        message = Message(content=content)
-        message.id = len(Message.query.all())+1
-        message.cid = message_cid
-        message.author = g.user.handle
-        message.pub_date = datetime.utcnow()
-        message.recipient = recipient
-
-        db.session.add(message)
-        db.session.commit()
-
-    else:
-        flash("Messages cannot be blank.", "danger")
-
-    return ('', 204)
+    # return ('', 204)
 # return redirect(url_for('messages.messages', recipient=recipient))

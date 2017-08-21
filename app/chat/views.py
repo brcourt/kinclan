@@ -66,14 +66,15 @@ def send_room_message(author, recipient, message):
     print('message: ', message)
     print('author: ', author[0], author[1])
     print('recipient: ', recipient)
+
     form = MessageForm()
     content = message['data']
     content = Markup(content).striptags()
     content = linkify(content)
 
-    emit('room_message',
-         {'data': message['data'], 'author': author, 'recipient': recipient},
-         room=message['room'])
+    if message['data'] != "":
+        emit('room_message', {'data': message['data'], 'author': author,
+                              'recipient': recipient}, room=message['room'])
 
     if message['room'] == author[0]:
         pass
