@@ -20,7 +20,7 @@
 <div class="row well post">
 	<div class="col-xs-3">
 		<h1></h1>
-		<img src="static/images/users/{{ user.handle }}.jpg" class="profpic">
+		<img src="static/images/users/{{ user.handle }}/{{ user.handle }}.jpg" class="profpic">
 	</div>
 	<div class="col-xs-8">
 		<p><strong><a href="/profile/{{ user.handle }}">{{ user.full_name() }}</a></strong><small> - {{ user.handle }}</small></p>
@@ -46,7 +46,7 @@
 	<div class="row">
 		<div class="col-xs-12 text-center palette-peter-river">
 		<p></p>
-			<img class="profpic" src="/static/images/users/{{ g.user.handle }}.jpg">
+			<img class="profpic" src="/static/images/users/{{ g.user.handle }}/{{ g.user.handle }}.jpg">
 		</div>
 	</div>
 <div class="row">
