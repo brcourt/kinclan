@@ -47,11 +47,11 @@
   <div class="grid">
     <div class="grid-sizer"></div>
       {% for photo_array in photo_array %}
-  <div class="grid-item">
-    <img src="{{ photo_array }}" />
-  </div>
-  {% endfor %}
-  </div>
+        <div class="grid-item">
+            <img src="{{ photo_array }}" />
+        </div>
+      {% endfor %}
+    </div>
   <script>
   var $grid = $('.grid').isotope({
     // options...

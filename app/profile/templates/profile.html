@@ -26,11 +26,11 @@
 				</div>
 				<div class="col-xs-3">
 					{% if g.user.handle != user.handle %}
-					<a href="{{ url_for('messages', recipient=user.handle) }}"><button type="submit" class="btn btn-block btn-sm btn-danger">Message</button></a>
+					<a href="{{ url_for('messages.messages', recipient=user.handle) }}"><button type="submit" class="btn btn-block btn-sm btn-danger">Message</button></a>
 					{% endif %}
 				</div>
 				<div class="col-xs-3">
-					<button type="submit" class="btn btn-block btn-sm btn-info">Photos</button>
+					<a href="{{ url_for('pictures.pictures', user=user.handle) }}"<button type="submit" class="btn btn-block btn-sm btn-info">Photos</button></a>
 				</div>
 			</div>
 		</div>

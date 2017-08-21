@@ -11,13 +11,17 @@
 {% block body %}
 
 <div class="row">
-	<div class="col-xs-8"><hr>
+	<div class="col-xs-8">
 		<div class="row post-form">
 			<div class="col-xs-9">
 				<form class="form-horizontal" name="input" action="/home/post" method="POST" role="form">
 					<div class="control-group form-group">
       			<input type="text" content="" name="content" placeholder="What's happening right now?" class="form-control" />
-				<label class="login-field-icon fui-chat" style="border-color: transparent transparent transparent;" for="login-pass"></label>
+				<a href src="#" onclick="alert('Add Photos');">
+          <label class="login-field-icon fui-photo" style="cursor: pointer;" style="border-color: transparent transparent transparent;" for="login-pass">
+
+          </label>
+        </a>
     			</div>
   			</div>
   				<div class="col-xs-3">
@@ -26,7 +30,7 @@
 				</form>
 
 			</div>
-<hr>
+
 
 {% for post in post %}
 <div class="row well post">
