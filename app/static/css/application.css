@@ -127,3 +127,20 @@ body {
   display: block;
   max-width: 100%;
 }
+
+/* ----- online status indicators ----- */
+.glyphicon.online-indicator:before {
+    content: "\25cf";
+    font-size: 1.5em;
+    color: green
+}
+.glyphicon.away-indicator:before {
+    content: "\25cf";
+    font-size: 1.5em;
+    color: yellow
+}
+.glyphicon.offline-indicator:before {
+    content: "\25cf";
+    font-size: 1.5em;
+    color: gray
+}

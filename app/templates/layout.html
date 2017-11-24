@@ -12,12 +12,13 @@
     <script src="/static/js/jquery.isotope.perfectmasonry.js"></script>
   </head>
   <body>
-    <div class="container">
 
-		 <div class="page-contents">
+
+
 		<div class="col-xs-12">
      <div class="navrow row">
-          <nav class="navbar navbar-inverse navbar-embossed" role="navigation">
+       <nav class="navbar navbar-inverse navbar-embossed" role="navigation">
+		 	       <div class="container">
             <div class="navbar-header">
               <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-01">
                 <span class="sr-only">Toggle navigation</span>
@@ -31,7 +32,7 @@
 
 
 					<div class="col-lg-5">
-					  <ul class="nav navbar-nav navbar-left" style="margin-top: 15px; margin-left: 20px;">
+					  <ul class="nav navbar-nav navbar-left" style="margin-top: 15px; margin-left: 25px;">
 						<li><a href="{{ url_for('messages.messages') }}" class="b" style="padding: 3px;">
 							<div class="label label-danger glyphicon glyphicon-envelope" id="refresh">
 								{{ new_message }}
@@ -59,7 +60,8 @@
 								{% endif %}
                   </ul>
 					</div>
-          </nav><!-- /navbar -->
+       </nav><!-- /navbar -->
+
 					<div class="row">
 					<div class="col-xs-12">
           <nav class="navbar2 menu2" role="navigation">
@@ -69,8 +71,10 @@
               </button>
 
 					</div>
-						<div class="row">
-						 <div class="col-lg-8" style="padding: 0px; margin-left: 5px;">
+			<div class="row">
+			  									       <div class="container">
+						  <div class="col-lg-8" style="padding: 0px; margin-left: 5px;">
+
               <ul class="nav nav-tabs">{% block menutabs %}{% endblock %}
 					</ul>
 					</div>
@@ -100,7 +104,7 @@
     {% endfor %}
   {% endif %}
 {% endwith %}
-
+	       <div class="container">
     {% block body %}{% endblock %}
     </div>
 </div>
@@ -288,6 +292,6 @@
     <div id="log"></div>
 
 
-
+</div>
   </body>
 </html>

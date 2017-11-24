@@ -8,7 +8,7 @@
 	<li><a href="{{ url_for('calendar.calendar') }}">Calendar</a></li>
 	{% endblock %}
 
-{% block body %}
+	{% block body %}
 <div class="col-xs-8" style="margin-right: 5px;">
 		<div class="row message" id="message-scroll">
 			<div class="col-xs-12">
@@ -22,7 +22,7 @@
 				<div class="row">
 					<div class="col-xs-11">
 						<small><p class="smalltext" align="right">{{ messages.pub_date|timesince(messages.pub_date) }} | {{ recipient }} said:</p></small>
-						<p class="post_content" align="right">{{ messages.content }}</p>
+						<p class="post_content message_text speech-bubble-recipient" align="right">{{ messages.content }}</p>
 					</div>
 					<div class="col-xs-1">
 						<img src="../static/images/users/{{ messages.author }}/{{ messages.author }}.jpg" class="smallprofpic">
@@ -35,7 +35,7 @@
 					</div>
 					<div class="col-xs-11">
 						<small><p class="smalltext" align="left">{{ messages.pub_date|timesince(messages.pub_date) }} | you said:</p></small>
-						<p class="post_content text-info" align="left">{{ messages.content|safe }}</p>
+						<p class="post_content message_text speech-bubble" align="left">{{ messages.content|safe }}</p>
 					</div>
 				</div>
 					{% endif %}
@@ -114,8 +114,9 @@
 						<img src="../static/images/users/{{ user.handle }}/{{ user.handle }}.jpg" class="smallprofpic">
 					</div>
 					<div class="col-xs-9" style="padding: -5px;">
-						<div class='label label-danger' id="{{ user.handle }}"></div>
-						<strong> {{ user.full_name() }} </strong>
+					  <div class='label label-danger' id="{{ user.handle }}"></div>
+					  <strong> {{ user.full_name() }} </strong>
+ 					 <span class="glyphicon online-indicator"></span>
 					</div>
 				</div></a>
               </li>

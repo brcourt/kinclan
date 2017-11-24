@@ -22,7 +22,7 @@ body	{
 
 .navrow	{
 	margin-left: -25px;
-  margin-right: -25px;
+	margin-right: -25px;
 	margin-top: -10px;
 }
 
@@ -169,4 +169,74 @@ nav	{
 .b:focus {
   outline: none;
 }
+
+/* ----- online status indicators ----- */
+.glyphicon.online-indicator:before {
+    content: "\25cf";
+    font-size: 1em;
+    color: lime
+}
+.glyphicon.away-indicator:before {
+    content: "\25cf";
+    font-size: 1em;
+    color: yellow
+}
+.glyphicon.offline-indicator:before {
+    content: "\25cf";
+    font-size: 1em;
+    color: gray
+}
+
+.speech-bubble {
+    position: relative;
+    background: #1abc9c;
+    border-radius: .4em;
+    width: 75%;
+
+}
+
+.speech-bubble:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 0;
+    height: 0;
+    border: 10px solid transparent;
+    border-right-color: #1abc9c;
+    border-left: 0;
+    border-top: 0;
+    margin-top: -10px;
+    margin-left: -10px;
+}
+
+.speech-bubble-recipient {
+    position: relative;
+    background: #bdc3c7;
+    border-radius: .4em;
+    width: 75%;
+    left: 25%;
+}
+
+.speech-bubble-recipient:after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 50%;
+    width: 0;
+    height: 0;
+    border: 10px solid transparent;
+    border-left-color: #bdc3c7;
+    border-right: 0;
+    border-top: 0;
+    margin-top: -5px;
+    margin-right: -10px;
+}
+
+.message_text {
+    color: white;
+    padding: 10px;
+	       
+}
+
 
